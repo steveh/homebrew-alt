@@ -31,7 +31,7 @@ class Php < Formula
   depends_on 'gmp' if ARGV.include? '--with-gmp'
 
   depends_on 'libevent' if ARGV.include? '--with-fpm'
-  depends_on 'freetds'if ARGV.include? '--with-mssql'
+  depends_on 'freetds' if ARGV.include? '--with-mssql'
   depends_on 'icu4c' if ARGV.include? '--with-intl'
 
   if ARGV.include? '--with-mysql' and ARGV.include? '--with-mariadb'
