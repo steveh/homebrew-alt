@@ -32,6 +32,7 @@ class Php < Formula
 
   depends_on 'libevent' if ARGV.include? '--with-fpm'
   depends_on 'freetds' if ARGV.include? '--with-mssql'
+  depends_on 'unixodbc' if ARGV.include? '--with-unixodbc'
   depends_on 'icu4c' if ARGV.include? '--with-intl'
 
   if ARGV.include? '--with-mysql' and ARGV.include? '--with-mariadb'
@@ -52,6 +53,7 @@ class Php < Formula
      ['--with-mariadb', 'Include MariaDB support'],
      ['--with-pgsql', 'Include PostgreSQL support'],
      ['--with-mssql', 'Include MSSQL-DB support'],
+     ['--with-unixodbc', 'Include unixODBC support'],
      ['--with-cgi', 'Enable building of the CGI executable (implies --without-apache)'],
      ['--with-fpm', 'Enable building of the fpm SAPI executable (implies --without-apache)'],
      ['--without-apache', 'Build without shared Apache 2.0 Handler module'],
@@ -100,7 +102,6 @@ class Php < Formula
       "--with-ldap",
       "--with-ldap-sasl=/usr",
       "--with-xmlrpc",
-      "--with-iodbc",
       "--with-kerberos=/usr",
       "--with-libxml-dir=#{Formula.factory('libxml2').prefix}",
       "--with-xsl=/usr",
@@ -149,6 +150,13 @@ class Php < Formula
     if ARGV.include? '--with-mssql'
       args.push "--with-mssql=#{Formula.factory('freetds').prefix}"
       args.push "--with-pdo-dblib=#{Formula.factory('freetds').prefix}"
+    end
+
+    if ARGV.include? '--with-unixodbc'
+      args.push "--with-unixODBC=#{Formula.factory('unixodbc').prefix}"
+      args.push "--with-pdo-odbc=unixODBC,#{Formula.factory('unixodbc').prefix}"
+    else
+      args.push "--with-iodbc"
     end
 
     if ARGV.include? '--with-intl'
