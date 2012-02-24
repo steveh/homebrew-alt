@@ -148,6 +148,7 @@ class Php < Formula
 
     if ARGV.include? '--with-mssql'
       args.push "--with-mssql=#{Formula.factory('freetds').prefix}"
+      args.push "--with-pdo-dblib=#{Formula.factory('freetds').prefix}"
     end
 
     if ARGV.include? '--with-intl'
