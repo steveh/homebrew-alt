@@ -7,11 +7,12 @@ class Tuntap < Formula
 
   def install
     system "make all"
-    system "mkdir -p #{prefix}/Extensions #{prefix}/StartupItems"
-    system "cp -pR tap.kext #{prefix}/Extensions/tap.kext"
-    system "cp -pR tun.kext #{prefix}/Extensions/tun.kext"
-    system "cp -pR startup_item/tap #{prefix}/StartupItems/tap"
-    system "cp -pR startup_item/tun #{prefix}/StartupItems/tun"
+    (prefix+"Extensions").mkpath
+    (prefix+"StartupItems").mkpath
+    (prefix+"Extensions").install "tap.kext"
+    (prefix+"Extensions").install "tun.kext"
+    (prefix+"StartupItems").install "startup_item/tap"
+    (prefix+"StartupItems").install "startup_item/tun"
   end
 
   def caveats

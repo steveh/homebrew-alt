@@ -8,18 +8,17 @@ class Aiccu < Formula
   depends_on 'tuntap'
 
   def install
-    inreplace 'Makefile' do |s| 
-      s.change_make_var! "DESTDIR", "#{prefix}"
+    inreplace 'Makefile' do |s|
+      s.change_make_var! "DESTDIR", prefix
       s.change_make_var! "dirsbin", "/sbin/"
     end
-    
+
     system "make all"
     system "make install"
-    
+
     (prefix+"etc").install "doc/aiccu.conf"
-    #system "ln",prefix+"etc/aiccu.conf","/etc/aiccu.conf"
   end
-  
+
   def caveats
     <<-EOS.undent
       You must run aiccu as root.
